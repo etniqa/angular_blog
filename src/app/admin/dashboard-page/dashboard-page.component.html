@@ -1,0 +1,46 @@
+<div *ngIf="this.posts !== undefined && this.posts !== null; else noPostsBlock">
+  <div *ngIf="isLoaded; else loadingBlock">
+    <div class="form-control">
+      <input type="text" placeholder="search post..." [(ngModel)]="searchStr">
+    </div>
+    <table>
+      <thead>
+      <tr>
+        <th>#</th>
+        <th>Author</th>
+        <th>Title</th>
+        <th>Date</th>
+        <th>Action</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let post of posts | searchPipe:searchStr; let ind = index">
+        <td>{{ind + 1}}</td>
+        <td>{{post.author}}</td>
+        <td>{{post.title}}</td>
+<!--        post.date | date: 'medium':null:'ru' === локалізація-->
+        <td>{{post.date | date: 'medium':null:'ru'}}</td>
+        <td>
+          <button class="btn btn-link open">
+            <a
+              [routerLink]="['/admin', 'post', post.id, 'edit']"
+            >Open</a>
+          </button>
+          <button class="btn btn-link">
+            <a (click)="remove(post.id)">Delete</a>
+          </button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<ng-template #loadingBlock>
+  <p class="text-center">Loading...</p>
+</ng-template>
+<ng-template #noPostsBlock>
+  <p class="text-center">Loading...</p>
+</ng-template>
+

@@ -1,0 +1,25 @@
+<div *ngIf="form">
+  <form
+    [formGroup]="form"
+    (ngSubmit)="submit()"
+  >
+    <div class="form-control" [ngClass]="{invalid: this.form.get('title').invalid && this.form.get('title').touched}">
+      <label for="title">Title:</label>
+      <input formControlName="title" id="title" type="text">
+      <div class="validation" *ngIf="this.form.get('title').invalid && this.form.get('title').touched">
+        <small *ngIf="this.form.get('title').errors.required">You have to fill this field</small>
+      </div>
+    </div>
+
+    <div class="form-control">
+      <label>Post content</label>
+      <!--    quill-editor === text redactor form library-->
+      <quill-editor formControlName="text">QUil</quill-editor>
+    </div>
+
+    <button class="btn btn-primary"
+            type="submit" [disabled]="form.invalid"
+    >Save
+    </button>
+  </form>
+</div>

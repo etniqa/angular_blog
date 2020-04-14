@@ -1,0 +1,37 @@
+<form
+  class="card"
+  [formGroup]="form"
+  (ngSubmit)="submit()"
+>
+  <div class="alert alert-info" *ngIf="this.messageFromGuard">{{this.messageFromGuard}}</div>
+
+  <div class="alert alert-danger" *ngIf="this.auth.error$ | async as error">
+    {{error}}
+  </div>
+
+  <h2>Enter in admin panel</h2>
+  <div class="form-control" [ngClass]="{invalid: this.form.get('email').invalid && this.form.get('email').touched}">
+    <label for="email">Email:</label>
+    <input formControlName="email" id="email" type="email">
+    <div class="validation" *ngIf="this.form.get('email').invalid && this.form.get('email').touched">
+      <small *ngIf="this.form.get('email').errors.required">You have to fill this field</small>
+      <small *ngIf="this.form.get('email').errors.email">You have to fill in right way your email</small>
+    </div>
+  </div>
+
+  <div class="form-control" [ngClass]="{invalid: this.form.get('password').invalid && this.form.get('password').touched}">
+    <label for="password">Password:</label>
+    <input formControlName="password" id="password" type="password">
+    <div class="validation" *ngIf="this.form.get('password').invalid && this.form.get('password').touched">
+      <small *ngIf="this.form.get('password').errors.required">You have to fill this field</small>
+      <small *ngIf="this.form.get('password').errors.minlength">
+        You have to enter {{this.form.get('password').errors.minlength.requiredLength - this.form.get('password').errors.minlength.actualLength}} symbols more
+      </small>
+    </div>
+  </div>
+  <button
+    class="btn btn-primary"
+    type="submit"
+    [disabled]="this.form.invalid || this.submitted"
+  >Enter</button>
+</form>

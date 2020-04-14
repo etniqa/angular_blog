@@ -1,0 +1,20 @@
+<!--post$ | async as post === we subscribe on this stream and get response named post-->
+<div *ngIf="post$ | async as post; else loading">
+  <div class="post">
+    <div class="header">
+      <h1>{{post.title}}</h1>
+      <button [routerLink]="['']" class="btn btn-link">Home</button>
+    </div>
+
+    <div class="info">
+      <strong>{{post.author}}</strong>
+      <small>{{post.date | date:'medium'}}</small>
+    </div>
+<!--    for save markup (bold text, italic...)-->
+    <quill-view-html [content]="post.text"></quill-view-html>
+  </div>
+</div>
+<ng-template #loading>
+  <p>Loading post...</p>
+</ng-template>
+
